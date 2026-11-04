@@ -1,5 +1,5 @@
-> **Fork com substituição de sprites por imagens em alta resolução (estilo texture pack).**
-> Veja [`sprite-pack/README.md`](sprite-pack/README.md): inclui um pack de exemplo (Lontra) para Goof Troop (USA) e um `.bat` para rodar.
+> **Fork with sprite replacement by high-resolution images (texture-pack style).**
+> See [`sprite-pack/README.md`](sprite-pack/README.md): it includes a sample pack (Otter) for Goof Troop (USA) and a `.bat` to run it.
 
 bsnes
 =====

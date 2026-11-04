@@ -1,75 +1,75 @@
-# Sprite pack (substituição de sprites por imagens em alta resolução)
+# Sprite pack (replacing sprites with high-resolution images)
 
-Este fork do [bsnes](https://github.com/bsnes-emu/bsnes) (v115) acrescenta ao renderizador `ppu-fast` um recurso estilo *texture pack*:
-sprites do jogo são agrupados em personagens, e cada grupo reconhecido é trocado por uma imagem PNG em alta resolução
-desenhada num quadro ampliado (por padrão 4x: 1024x960), respeitando a prioridade/camadas do jogo. O pack incluído
-(`sprite-pack/lontra`) é um personagem original, a **Lontra**, que imita as poses de caminhada e as poses paradas do
-jogador em **Goof Troop (USA)**.
+This fork of [bsnes](https://github.com/bsnes-emu/bsnes) (v115) adds a *texture-pack*-style feature to the `ppu-fast` renderer:
+the game's sprites are grouped into characters, and each recognized group is replaced by a high-resolution PNG
+drawn in an enlarged frame (4x by default: 1024x960), respecting the game's priority/layers. The bundled pack
+(`sprite-pack/lontra`, "lontra" is Portuguese for otter) is an original character, the **Otter**, which mimics the walking and standing poses of the
+player in **Goof Troop (USA)**.
 
-> **Atenção: é necessário ter a ROM de Goof Troop (USA).** Ela **não** está incluída neste repositório nem no release,
-> e não será fornecida. Use a ROM do seu próprio cartucho. O pack só reconhece essa versão (USA) do jogo.
+> **Warning: you need a Goof Troop (USA) ROM.** It is **not** included in this repository or in the release,
+> and it will not be provided. Use the ROM from your own cartridge. The pack only recognizes the USA version of the game.
 
-## Como rodar (Windows)
+## How to run (Windows)
 
-### Opção A: release pronto (sem compilar)
+### Option A: ready-made release (no compiling)
 
-1. Baixe `bsnes-sprite-pack-v1.zip` na página de [Releases](https://github.com/jrussi/bsnes/releases) e extraia numa pasta.
-2. Tenha em mãos a sua ROM de **Goof Troop (USA)** (`.sfc` ou `.smc`). Sem ela não há o que rodar.
-3. Dê dois cliques em `rodar_com_pack.bat`. **Não abra o `bsnes.exe` direto**: sem o `.bat` o pack não é carregado.
-4. No bsnes, use o menu *Sistema > Carregar Jogo...* (*System > Load Game...*) e escolha a ROM.
-   Ou arraste a ROM sobre o `rodar_com_pack.bat`.
-5. Dentro do jogo, quando o personagem do jogador (lado/frente/costas, andando ou parado) for reconhecido, ele aparece como a Lontra em alta resolução.
-   O renderizador padrão (`ppu-fast`) já é o usado; não precisa mudar nada nas configurações.
+1. Download `bsnes-sprite-pack-v1.zip` from the [Releases](https://github.com/jrussi/bsnes/releases) page and extract it to a folder.
+2. Have your **Goof Troop (USA)** ROM at hand (`.sfc` or `.smc`). Without it there is nothing to run.
+3. Double-click `rodar_com_pack.bat` ("run with pack"). **Do not open `bsnes.exe` directly**: without the `.bat` the pack is not loaded.
+4. In bsnes, use the menu *System > Load Game...* and pick the ROM.
+   Or drag the ROM onto `rodar_com_pack.bat`.
+5. In game, when the player character (side/front/back, walking or standing) is recognized, it appears as the Otter in high resolution.
+   The default renderer (`ppu-fast`) is the one used; you don't need to change any settings.
 
-### Opção B: compilar
+### Option B: build it yourself
 
-1. Compile o bsnes (MSYS2 MINGW64):
+1. Build bsnes (MSYS2 MINGW64):
    ```
    pacman -S --needed mingw-w64-x86_64-gcc make
    cd bsnes
    make -j8 openmp=false
    ```
-   O executável sai em `bsnes/out/bsnes.exe`.
-2. Tenha a ROM de **Goof Troop (USA)**. Dê dois cliques em `sprite-pack/rodar_com_pack.bat` e carregue a ROM pelo menu, ou rode pelo terminal passando a ROM:
+   The executable ends up at `bsnes/out/bsnes.exe`.
+2. Have the **Goof Troop (USA)** ROM. Double-click `sprite-pack/rodar_com_pack.bat` and load the ROM from the menu, or run it from a terminal passing the ROM:
    ```
-   sprite-pack\rodar_com_pack.bat "C:\caminho\Goof Troop (USA).sfc"
+   sprite-pack\rodar_com_pack.bat "C:\path\Goof Troop (USA).sfc"
    ```
-   O batch só define a variável `BSNES_SPRITE_PACK` apontando para `sprite-pack\lontra` e abre o `bsnes.exe`.
+   The batch file only sets the `BSNES_SPRITE_PACK` variable to `sprite-pack\lontra` and starts `bsnes.exe`.
 
-Sem a variável, o bsnes se comporta como o original.
+Without the variable, bsnes behaves like the original.
 
-## Limitações
+## Limitations
 
-- Só funciona com o renderizador `ppu-fast` (o padrão) e em modo normal (sem hires, interlace ou HD Mode 7).
-- Com o pack ativo o quadro sai ampliado (escala do pack) e os filtros de software do bsnes ficam desativados.
-- Os ids dos grupos são hashes das peças de sprite do jogo, então o pack incluído só reconhece Goof Troop (USA).
-  Poses que não estão no pack aparecem com o sprite original.
-- É uma prova de conceito: o personagem substitui só as poses mapeadas; inimigos e itens não são trocados.
+- Only works with the `ppu-fast` renderer (the default) and in normal mode (no hires, interlace or HD Mode 7).
+- With the pack active the frame is output enlarged (the pack's scale) and bsnes' software filters are disabled.
+- Group ids are hashes of the game's sprite pieces, so the bundled pack only recognizes Goof Troop (USA).
+  Poses that are not in the pack show the original sprite.
+- This is a proof of concept: the character replaces only the mapped poses; enemies and items are not replaced.
 
-## Variáveis de ambiente
+## Environment variables
 
-- `BSNES_SPRITE_PACK`: pasta com o `pack.txt` e os PNGs. Cada linha do `pack.txt`: `id png escala largura altura margem`
-  (`largura`/`altura` são as dimensões do PNG em pixels; `margem` é a borda extra em pixels nativos, 8 nas imagens do pack; todas as
-  linhas devem ter a mesma escala, de 2 a 8). Com o pack ativo o emulador grava nessa pasta os logs `recognized-*.csv` e
-  `unrecognized-*.csv` (grupos vistos que estão ou não no pack), que servem para descobrir quais poses faltam.
-- `BSNES_SPRITE_DUMP`: pasta que já exista; grava cada peça de sprite em PNG, um `manifest.csv` e `frames-*.csv` (as peças de cada quadro).
-  Serve para montar novos packs.
+- `BSNES_SPRITE_PACK`: folder containing `pack.txt` and the PNGs. Each `pack.txt` line: `id png scale width height margin`
+  (`width`/`height` are the PNG dimensions in pixels; `margin` is the extra border in native pixels, 8 in the pack's images; all
+  lines must use the same scale, from 2 to 8). With the pack active the emulator writes the logs `recognized-*.csv` and
+  `unrecognized-*.csv` into that folder (groups seen that are or are not in the pack), which help find which poses are missing.
+- `BSNES_SPRITE_DUMP`: an existing folder; writes each sprite piece as a PNG, a `manifest.csv` and `frames-*.csv` (the pieces of each frame).
+  Useful for building new packs.
 
-## Criar ou regenerar um pack
+## Creating or regenerating a pack
 
-Em `sprite-pack/tools` (Python 3, `librsvg` com `rsvg-convert` e Pillow):
+In `sprite-pack/tools` (Python 3, `librsvg` with `rsvg-convert`, and Pillow):
 
-- `listar_grupos.py frames.csv grupos.json` lista os grupos de sprites vistos num dump.
-- `render_pack.py tabela.json grupos.json pasta_saida [escala]` renderiza os SVGs (em `svg/`) para PNG com a margem certa e escreve `pack.txt`.
-  A `tabela.json` liga o id de cada grupo ao SVG que o substitui. O viewBox do SVG deve ter o tamanho do grupo em pixels nativos.
-- `lontra.py` e `lontra2.py` geram os SVGs da lontra (pose de lado, de frente e de costas).
+- `listar_grupos.py frames.csv grupos.json` lists the sprite groups seen in a dump.
+- `render_pack.py tabela.json grupos.json output_folder [scale]` renders the SVGs (in `svg/`) to PNG with the right margin and writes `pack.txt`.
+  `tabela.json` links each group id to the SVG that replaces it. The SVG viewBox must match the group size in native pixels.
+- `lontra.py` and `lontra2.py` generate the otter SVGs (side, front and back poses).
 
-O pack incluído foi gerado com `python3 render_pack.py tabela.json grupos.json ../lontra 4`.
+The bundled pack was generated with `python3 render_pack.py tabela.json grupos.json ../lontra 4`.
 
-## Arquivos do emulador alterados
+## Emulator files changed
 
-- `bsnes/sfc/ppu-fast/spritedump.cpp` (novo): dump, agrupamento, leitura do pack e composição.
-- `bsnes/sfc/ppu-fast/ppu.cpp`, `ppu.hpp`, `line.cpp`: ganchos para o dump e uma segunda passada sem sprites (`skipObjects`/`renderRedirect`).
-- `nall/arithmetic.hpp`: `#include <stdexcept>` (necessário para compilar com GCC recente).
+- `bsnes/sfc/ppu-fast/spritedump.cpp` (new): dump, grouping, pack loading and composition.
+- `bsnes/sfc/ppu-fast/ppu.cpp`, `ppu.hpp`, `line.cpp`: hooks for the dump and a second pass without sprites (`skipObjects`/`renderRedirect`).
+- `nall/arithmetic.hpp`: `#include <stdexcept>` (needed to build with recent GCC).
 
-Licença: GPLv3 ou posterior, como o bsnes. As imagens da lontra são originais deste fork.
+License: GPLv3 or later, same as bsnes. The otter images are original to this fork.

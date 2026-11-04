@@ -269,6 +269,10 @@ public:
   auto readObject(uint10 address) -> uint8;
   auto writeObject(uint10 address, uint8 data) -> void;
 
+  //spritedump.cpp
+  auto dumpSprites() -> void;
+  auto composePack(const uint16*& data, uint& pitch, uint& width, uint& height, uint& scale) -> bool;
+
 //serialized:
   Latch latch;
   IO io;
@@ -279,6 +283,8 @@ public:
 
   //[unserialized]
   uint16* output = {};
+  uint16* renderRedirect = nullptr;  //spritedump.cpp: render into another buffer (background-only pass)
+  bool skipObjects = false;
   uint16* lightTable[16] = {};
 
   uint ItemLimit = 0;

@@ -1,0 +1,141 @@
+{
+ "escala_padrao": 4,
+ "entradas": [
+  {
+   "id": "aff545478fd2207b",
+   "svg": "svg/lontra_0.svg"
+  },
+  {
+   "id": "b6606c56c79078c4",
+   "svg": "svg/lontra_1.svg"
+  },
+  {
+   "id": "e1ef7b635b45e74d",
+   "svg": "svg/lontra_2.svg"
+  },
+  {
+   "id": "8a9a53d17643045d",
+   "svg": "svg/lontra_3.svg"
+  },
+  {
+   "id": "6465be117e98920c",
+   "svg": "svg/lontra_4.svg"
+  },
+  {
+   "id": "d994c02ff3aad797",
+   "svg": "svg/lontra_5.svg"
+  },
+  {
+   "id": "18b10e7141a6495b",
+   "svg": "svg/anel_0.svg"
+  },
+  {
+   "id": "ef8e1041246d97b8",
+   "svg": "svg/anel_1.svg"
+  },
+  {
+   "id": "864f16a67f95ec87",
+   "svg": "svg/anel_2.svg"
+  },
+  {
+   "id": "b1b79bd2b4aca777",
+   "svg": "svg/lontra_costas_1.svg"
+  },
+  {
+   "id": "8bb047078862dcca",
+   "svg": "svg/lontra_lado_2.svg"
+  },
+  {
+   "id": "d6f6482c971a2cb3",
+   "svg": "svg/lontra_costas_3.svg"
+  },
+  {
+   "id": "6b059c1bcbbc825a",
+   "svg": "svg/lontra_frente_4.svg"
+  },
+  {
+   "id": "ce26bac9a9d97eca",
+   "svg": "svg/lontra_frente_5.svg"
+  },
+  {
+   "id": "d778fa4abc661fcc",
+   "svg": "svg/lontra_costas_6.svg"
+  },
+  {
+   "id": "d248041725282046",
+   "svg": "svg/lontra_costas_7.svg"
+  },
+  {
+   "id": "c00b135b5628fa7d",
+   "svg": "svg/lontra_frente_8.svg"
+  },
+  {
+   "id": "4958d3d788282e7a",
+   "svg": "svg/lontra_frente_9.svg"
+  },
+  {
+   "id": "bd4f4aa82835d954",
+   "svg": "svg/lontra_costas_10.svg"
+  },
+  {
+   "id": "e9d8e9c7aebbbfe3",
+   "svg": "svg/lontra_costas_11.svg"
+  },
+  {
+   "id": "8e28a2a452fbe499",
+   "svg": "svg/lontra_frente_12.svg"
+  },
+  {
+   "id": "82ad296e69f2f398",
+   "svg": "svg/lontra_costas_13.svg"
+  },
+  {
+   "id": "0f043ca023df707f",
+   "svg": "svg/lontra_frente_14.svg"
+  },
+  {
+   "id": "0686061a17b24cd4",
+   "svg": "svg/lontra_frente_15.svg"
+  },
+  {
+   "id": "14b26cee5e558db6",
+   "svg": "svg/lontra_lado_16.svg"
+  },
+  {
+   "id": "5f1020e1d00b2920",
+   "svg": "svg/lontra_ladoesq_17.svg"
+  },
+  {
+   "id": "913798a57a4aabe8",
+   "svg": "svg/lontra_frente_18.svg"
+  },
+  {
+   "id": "859e698060f6ee59",
+   "svg": "svg/lontra_lado_115.svg"
+  },
+  {
+   "id": "eed7f3e5679a2ce0",
+   "svg": "svg/lontra_lado_120.svg"
+  },
+  {
+   "id": "2d7ada0f46dba03e",
+   "svg": "svg/lontra_lado_131.svg"
+  },
+  {
+   "id": "f6e9312eae0a85ab",
+   "svg": "svg/lontra_lado_136.svg"
+  },
+  {
+   "id": "df62866e2c3a5c36",
+   "svg": "svg/lontra_lado_137.svg"
+  },
+  {
+   "id": "6cdd5c15261d3ce1",
+   "svg": "svg/lontra_costas_138.svg"
+  },
+  {
+   "id": "5ac7f7f75d4299f0",
+   "svg": "svg/lontra_frente_139.svg"
+  }
+ ]
+}

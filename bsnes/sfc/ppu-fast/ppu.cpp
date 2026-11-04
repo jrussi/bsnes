@@ -14,6 +14,7 @@ PPU ppu;
 #include "mode7.cpp"
 #include "mode7hd.cpp"
 #include "object.cpp"
+#include "spritedump.cpp"
 #include "window.cpp"
 #include "serialization.cpp"
 
@@ -128,6 +129,7 @@ auto PPU::scanline() -> void {
   }
 
   if(vcounter() == vdisp()) {
+    if(!io.displayDisable) dumpSprites();
     if(!io.displayDisable) oamAddressReset();
   }
 
@@ -162,7 +164,10 @@ auto PPU::refresh() -> void {
     }
 
     if(auto device = controllerPort2.device) device->draw(output, pitch * sizeof(uint16), width, height);
-    platform->videoFrame(output, pitch * sizeof(uint16), width, height, hd() ? hdScale() : 1);
+    const uint16* videoData = output;
+    uint videoPitch = pitch, videoWidth = width, videoHeight = height, videoScale = hd() ? hdScale() : 1;
+    composePack(videoData, videoPitch, videoWidth, videoHeight, videoScale);
+    platform->videoFrame(videoData, videoPitch * sizeof(uint16), videoWidth, videoHeight, videoScale);
 
     frame.pitch  = pitch;
     frame.width  = width;

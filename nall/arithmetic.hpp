@@ -4,6 +4,7 @@
 //warning: each size is quadratically more expensive than the size before it!
 
 #include <nall/stdint.hpp>
+#include <stdexcept>
 #include <nall/string.hpp>
 #include <nall/range.hpp>
 #include <nall/traits.hpp>

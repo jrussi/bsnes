@@ -44,7 +44,7 @@ auto PPU::Line::render(bool fieldID) -> void {
   auto hd = ppu.hd();
   auto ss = ppu.ss();
   auto scale = ppu.hdScale();
-  auto output = ppu.output + (!hd
+  auto output = (ppu.renderRedirect ? ppu.renderRedirect : ppu.output) + (!hd
   ? (y * 1024 + (ppu.interlace() && field() ? 512 : 0))
   : (y * 256 * scale * scale)
   );
@@ -75,7 +75,7 @@ auto PPU::Line::render(bool fieldID) -> void {
   if(io.extbg == 0) renderBackground(io.bg2, Source::BG2);
   renderBackground(io.bg3, Source::BG3);
   renderBackground(io.bg4, Source::BG4);
-  renderObject(io.obj);
+  if(!ppu.skipObjects) renderObject(io.obj);
   if(io.extbg == 1) renderBackground(io.bg2, Source::BG2);
   renderWindow(io.col.window, io.col.window.aboveMask, windowAbove);
   renderWindow(io.col.window, io.col.window.belowMask, windowBelow);

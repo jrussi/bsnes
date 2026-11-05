@@ -1,95 +1,98 @@
-> **Fork with sprite replacement by high-resolution images (texture-pack style).**
-> See [`sprite-pack/README.md`](sprite-pack/README.md): it includes a sample pack (Otter) for Goof Troop (USA) and a `.bat` to run it.
+# bsnes sprite pack: replace SNES sprites with high-resolution images
 
-bsnes
-=====
+A fork of [bsnes](https://github.com/bsnes-emu/bsnes) (v115) that adds a *texture-pack*-style feature to the `ppu-fast` renderer.
+The game's sprites are grouped into characters, and each recognized group is replaced by a high-resolution PNG
+drawn in an enlarged frame (4x by default, 1024x960), respecting the game's priority and layers.
 
-![bsnes logo © byuu](https://byuu.org/images/bsnes/github/byuu-bsnes-logo.png)
+The bundled pack is an original character, the **Otter** (`lontra` in Portuguese), that stands in for the player in
+**Goof Troop (USA)**. This is a proof of concept.
 
-bsnes is a multi-platform Super Nintendo (Super Famicom) emulator from
-[byuu](https://byuu.org/about) that focuses on performance, features, and ease
-of use.
+## Before and after
 
-Development
------------
+Original sprites:
 
-Git is used for the development of new releases, and represents a staging
-environment. As bsnes is rather mature, things should generally be quite stable.
-However, bugs will exist, regressions will occur, so proceed at your own risk.
+![Original sprites](sprite-pack/docs/original-1.png)
+![Original sprites](sprite-pack/docs/original-2.png)
 
-If stability is required, please download the latest stable release from the
-[official website.](https://byuu.org/bsnes)
+With the Otter pack:
 
-Unique Features
----------------
+![Otter pack](sprite-pack/docs/otter-1.png)
+![Otter pack](sprite-pack/docs/otter-2.png)
 
-  - True Super Game Boy emulation (using the SameBoy core by Lior Halphon)
-  - HD mode 7 graphics with optional supersampling (by DerKoun)
-  - Low-level emulation of all SNES coprocessors (DSP-n, ST-01n, Cx4)
-  - Multi-threaded PPU graphics renderer
-  - Speed mode settings which retain smooth audio output (50%, 75%, 100%, 150%, 200%)
-  - Built-in games database with thousands of game entries
-  - Built-in cheat code database for hundreds of popular games (by mightymo)
-  - Built-in save state manager with screenshot previews and naming capabilities
-  - Customizable per-byte game mappings to support any cartridges, including prototype games
-  - 7-zip decompression support
-  - Extensive Satellaview emulation, including BS Memory flash write and wear-leveling emulation
-  - Optional higan game folder support (standard game ROM files are also fully supported!)
-  - Advanced mapping system allowing multiple bindings to every emulated input
+> **You need a Goof Troop (USA) ROM.** It is **not** included in this repository or in the release,
+> and it will not be provided. Use the ROM from your own cartridge. The pack only recognizes the USA version.
 
-Standard Features
------------------
+## Quick start (Windows, no compiling)
 
-  - MSU1 support
-  - BPS and IPS soft-patching support
-  - Save states with undo and redo support (for reverting accidental saves and loads)
-  - OpenGL multi-pass pixel shaders
-  - Several built-in software filters, including HQ2x (by MaxSt) and snes_ntsc (by blargg)
-  - Adaptive sync and dynamic rate control for perfect audio/video synchronization
-  - Just-in-time input polling for minimal input latency
-  - Run-ahead support for removing internal game engine input latency
-  - Support for Direct3D exclusive mode video
-  - Support for WASAPI exclusive mode audio
-  - Periodic auto-saving of game saves
-  - Auto-saving of states when unloading games, and auto-resuming of states when reloading games
-  - Sprite limit disable support
-  - Cubic audio interpolation support
-  - Optional high-level emulation of most SNES coprocessors
-  - Optional emulation of flaws in older emulators for compatibility with older unofficial software
-  - CPU, SA1, and SuperFX overclocking support
-  - Frame advance support
-  - Screenshot support
-  - Cheat code search support
-  - Movie recording and playback support
-  - Rewind support
-  - HiDPI support
-  - Multi-monitor support
-  - Turbo support for controller inputs
+1. Download `bsnes-sprite-pack-v1.zip` from [Releases](https://github.com/jrussi/bsnes/releases) and extract it to a folder.
+2. Have your **Goof Troop (USA)** ROM (`.sfc` or `.smc`) ready.
+3. Double-click `rodar_com_pack.bat` ("run with pack"). **Do not open `bsnes.exe` directly**: without the `.bat` the pack is not loaded.
+4. In bsnes, choose *System > Load Game...* and pick the ROM. You can also drag the ROM onto `rodar_com_pack.bat`.
+5. Play. When the player character (side, front or back, walking or standing) is recognized, it appears as the Otter.
+   The default renderer (`ppu-fast`) is the one used, so there is nothing to change in the settings.
 
-Links
------
+## Building from source
 
-  - [Official website](https://byuu.org/bsnes)
-  - [Official git repository](https://github.com/byuu/bsnes)
-  - [Donations](https://patreon.com/byuu)
+1. Install the tools and build (MSYS2 MINGW64):
+   ```
+   pacman -S --needed mingw-w64-x86_64-gcc make
+   cd bsnes
+   make -j8 openmp=false
+   ```
+   The executable is written to `bsnes/out/bsnes.exe`.
+2. Run `sprite-pack\rodar_com_pack.bat` and load the ROM from the menu, or pass it on the command line:
+   ```
+   sprite-pack\rodar_com_pack.bat "C:\path\Goof Troop (USA).sfc"
+   ```
 
-Release Builds
---------------
+The batch file only sets `BSNES_SPRITE_PACK` to `sprite-pack\lontra` and starts `bsnes.exe`. Without that variable, bsnes behaves like the original.
 
-  - [Windows binaries](https://byuu.itch.io/bsnes)
+## Limitations
 
-Nightly Builds
---------------
+- Works only with the `ppu-fast` renderer (the default) in normal mode (no hires, interlace or HD Mode 7).
+- With the pack active, the frame is output enlarged (the pack's scale) and bsnes' software filters are disabled.
+- Group ids are hashes of the game's sprite pieces, so the bundled pack only recognizes Goof Troop (USA).
+  Poses that are not in the pack show the original sprite.
+- Proof of concept: only the mapped poses of the player are replaced. Enemies and items are not.
 
-  - [Download](https://cirrus-ci.com/github/byuu/bsnes/master)
-  - ![Build status](https://api.cirrus-ci.com/github/byuu/bsnes.svg?task=windows-x86_64-binaries)
-  - ![Build status](https://api.cirrus-ci.com/github/byuu/bsnes.svg?task=macOS-x86_64-binaries)
-  - ![Build status](https://api.cirrus-ci.com/github/byuu/bsnes.svg?task=linux-x86_64-binaries)
-  - ![Build status](https://api.cirrus-ci.com/github/byuu/bsnes.svg?task=freebsd-x86_64-binaries)
+## How it works
 
-Preview
--------
+- **Groups:** sprites whose boxes touch (within 1 pixel) form a group. A group id is an FNV-1a 64-bit hash of its pieces
+  (tile hash, offset, flips and size).
+- **Composition:** a recognized group is erased from the native frame and drawn again from its PNG at the pack's scale, with the original priority.
+- **Pack format:** `pack.txt` has one line per group, `id png scale width height margin`.
+  `width` and `height` are the PNG size in pixels, `margin` is the extra border in native pixels (8 in the bundled pack),
+  and all lines must use the same scale (2 to 8).
 
-![bsnes user interface © byuu](https://byuu.org/images/bsnes/github/byuu-bsnes-user-interface.png)
-![bsnes running Bahamut Lagoon © byuu](https://byuu.org/images/bsnes/github/byuu-bsnes-bahamut-lagoon.png)
-![bsnes running Tengai Makyou Zero © byuu](https://byuu.org/images/bsnes/github/byuu-bsnes-tengai-makyou-zero.png)
+## Environment variables
+
+- `BSNES_SPRITE_PACK`: folder with `pack.txt` and the PNGs. While it is active, the emulator also writes `recognized-*.csv` and
+  `unrecognized-*.csv` there (groups seen that are, or are not, in the pack), which show which poses are still missing.
+- `BSNES_SPRITE_DUMP`: an existing folder. Writes every sprite piece as a PNG, plus `manifest.csv` and `frames-*.csv` (the pieces of each frame).
+  Useful for building new packs.
+
+## Creating or regenerating a pack
+
+Tools are in `sprite-pack/tools` (Python 3, `librsvg` with `rsvg-convert`, and Pillow):
+
+- `listar_grupos.py frames.csv grupos.json` lists the sprite groups seen in a dump.
+- `render_pack.py tabela.json grupos.json output_folder [scale]` renders the SVGs in `svg/` to PNG with the right margin and writes `pack.txt`.
+  `tabela.json` links each group id to the SVG that replaces it, and each SVG viewBox must match its group size in native pixels.
+- `lontra.py` and `lontra2.py` generate the Otter SVGs (side, front and back poses).
+
+The bundled pack was generated with `python3 render_pack.py tabela.json grupos.json ../lontra 4`.
+
+## Emulator files changed
+
+- `bsnes/sfc/ppu-fast/spritedump.cpp` (new): dump, grouping, pack loading and composition.
+- `bsnes/sfc/ppu-fast/ppu.cpp`, `ppu.hpp`, `line.cpp`: hooks for the dump and a second pass without sprites (`skipObjects` and `renderRedirect`).
+- `nall/arithmetic.hpp`: adds `#include <stdexcept>`, which recent GCC needs to build.
+
+## About bsnes
+
+bsnes is a Super Nintendo (Super Famicom) emulator by byuu and contributors. This fork is based on v115 and only adds the sprite pack feature above.
+For the emulator itself (features, downloads, documentation), see the upstream project: https://github.com/bsnes-emu/bsnes
+
+## License
+
+GPLv3 or later, same as bsnes (see `GPLv3.txt`). The Otter images are original to this fork.
